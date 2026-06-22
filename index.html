@@ -1,0 +1,2122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skyside Coffee — Common Ground & High Ground</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=Abril+Fatface&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --espresso: #1a0a00;
+    --dark-roast: #2d1500;
+    --medium: #5c3317;
+    --caramel: #c8832a;
+    --cream: #f5ead8;
+    --foam: #fdf6ec;
+    --gold: #e8a830;
+    --sage: #7a8c5c;
+    --rust: #b84c1e;
+    --bg: #1c1c1e;
+    --bg2: #242426;
+    --bg3: #2c2c2e;
+    --border: rgba(232,168,48,0.15);
+    --text: #e8ddd0;
+    --text-muted: rgba(232,221,208,0.5);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+
+  /* Fix all images and SVGs from overflowing */
+  img, svg { max-width: 100%; height: auto; }
+
+  /* Prevent any element from exceeding viewport */
+  section, div { max-width: 100%; }
+
+  /* NAV TABS */
+  .tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg2);
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    padding: 0 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 1px 0 var(--border);
+  }
+  .tab {
+    padding: 14px 28px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,234,216,0.6);
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: all 0.3s;
+    border-bottom: 2px solid transparent;
+    position: relative;
+  }
+  .tab:hover { color: var(--cream); }
+  .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* SECTIONS */
+  .section { display: none; min-height: 100vh; }
+  .section.active { display: block; }
+
+  /* ======================== LOGO SECTION ======================== */
+  #logo-section {
+    background: var(--bg);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  #logo-section::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: radial-gradient(ellipse at 50% 100%, rgba(232,168,48,0.08) 0%, rgba(200,131,42,0.04) 40%, transparent 70%);
+    pointer-events: none;
+  }
+  #logo-section.active { display: flex; }
+
+  .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .logo-svg-wrap {
+    width: min(340px, 85vw);
+    height: min(340px, 85vw);
+    animation: fadeUp 0.8s ease both, rotateSlow 30s linear infinite;
+    filter: drop-shadow(0 0 40px rgba(232,168,48,0.25)) drop-shadow(0 20px 60px rgba(0,0,0,0.7));
+  }
+  .logo-svg { width: 100%; height: 100%; }
+
+  @keyframes rotateSlow {
+    from { filter: drop-shadow(0 0 30px rgba(232,168,48,0.2)) drop-shadow(0 20px 60px rgba(0,0,0,0.7)); }
+    50% { filter: drop-shadow(0 0 50px rgba(232,168,48,0.35)) drop-shadow(0 20px 60px rgba(0,0,0,0.7)); }
+    to { filter: drop-shadow(0 0 30px rgba(232,168,48,0.2)) drop-shadow(0 20px 60px rgba(0,0,0,0.7)); }
+  }
+
+  .brand-info {
+    margin-top: 50px;
+    max-width: 600px;
+    text-align: center;
+  }
+
+  .brand-name-display {
+    font-family: 'Abril Fatface', serif;
+    font-size: 3.5rem;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .brand-mission {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .brand-colors {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+    align-items: center;
+  }
+
+  .color-swatch {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  }
+
+  .swatch-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  .swatch-wrap { text-align: center; }
+
+  /* ======================== MENU SECTION ======================== */
+  #menu-section {
+    background: var(--bg);
+    padding: 60px 0 80px;
+  }
+
+  .menu-header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .menu-logo-small {
+    font-size: 2.5rem;
+    margin-bottom: 8px;
+  }
+
+  .menu-brand {
+    font-family: 'Abril Fatface', serif;
+    font-size: 3rem;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .menu-rule {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin: 16px 0;
+  }
+
+  .menu-rule span { font-size: 1.2rem; color: var(--caramel); }
+  .menu-rule::before, .menu-rule::after {
+    content: '';
+    height: 1px;
+    width: 80px;
+    background: var(--caramel);
+    opacity: 0.4;
+  }
+
+  .menu-sub {
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .menu-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 480px) {
+    .menu-grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  .menu-category {
+    background: #ffffff;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    animation: fadeUp 0.6s ease both;
+    border-bottom: 4px solid var(--caramel);
+  }
+
+  .cat-header {
+    background: var(--espresso);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .cat-icon { font-size: 1.5rem; }
+
+  .cat-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--cream);
+    font-weight: 700;
+  }
+
+  .cat-items {
+    padding: 8px 0;
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 20px;
+    gap: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+    transition: background 0.2s;
+  }
+
+  .menu-item:hover { background: rgba(200,131,42,0.06); }
+  .menu-item:last-child { border-bottom: none; }
+
+  .item-info { flex: 1; }
+
+  .item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #1a0a00;
+    margin-bottom: 2px;
+  }
+
+  .item-desc {
+    font-size: 0.73rem;
+    color: rgba(26,10,0,0.55);
+    line-height: 1.4;
+  }
+
+  .item-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--caramel);
+    white-space: nowrap;
+    padding-top: 1px;
+  }
+
+  .size-prices {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: right;
+  }
+
+  .size-row {
+    font-size: 0.75rem;
+    color: #5c3317;
+  }
+
+  .size-row strong {
+    color: var(--caramel);
+    font-family: 'Playfair Display', serif;
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--espresso);
+    padding: 2px 7px;
+    border-radius: 20px;
+    margin-left: 6px;
+    vertical-align: middle;
+    font-weight: 600;
+  }
+
+  /* ======================== BUSINESS PLAN ======================== */
+  #business-section {
+    background: var(--bg);
+    padding: 60px 0 80px;
+  }
+
+  .bp-header {
+    text-align: center;
+    margin-bottom: 60px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .bp-title {
+    font-family: 'Abril Fatface', serif;
+    font-size: 2.8rem;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .bp-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .bp-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  @media (max-width: 700px) {
+    .bp-grid { grid-template-columns: 1fr; }
+    .menu-brand { font-size: 2.2rem; }
+    .logo-svg-wrap { width: 260px; height: 260px; }
+    .brand-name-display { font-size: 2.2rem; }
+    .bp-title { font-size: 2rem; }
+    .mkt-title { font-size: 2rem; }
+    .tabs { gap: 0; padding: 0 4px; }
+    .tab { padding: 12px 10px; font-size: 0.7rem; letter-spacing: 0.06em; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .mkt-grid { grid-template-columns: 1fr; }
+    .brand-info { padding: 0 16px; }
+    .menu-item { padding: 12px 16px; }
+    .cat-header { padding: 16px 16px; }
+    .bp-card { padding: 20px 16px; }
+    .role-grid { grid-template-columns: 1fr; }
+    .finance-table { font-size: 0.75rem; }
+    .finance-table th, .finance-table td { padding: 7px 0; }
+    .mkt-card { padding: 20px 16px; }
+    .sample-post { max-width: 100%; }
+    .logo-container { padding: 0 16px; }
+  }
+
+  @media (max-width: 480px) {
+    .tab { padding: 10px 6px; font-size: 0.62rem; letter-spacing: 0.04em; }
+    .menu-brand { font-size: 1.8rem; }
+    .brand-name-display { font-size: 1.8rem; }
+    .logo-svg-wrap { width: 220px; height: 220px; }
+    .bp-grid { grid-template-columns: 1fr; }
+    .bp-card.full { grid-column: 1; }
+  }
+
+  .bp-card {
+    background: #ffffff;
+    border-radius: 2px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    animation: fadeUp 0.6s ease both;
+    border-left: 4px solid var(--caramel);
+  }
+
+  .bp-card.full { grid-column: 1 / -1; }
+  .bp-card.accent { border-left-color: var(--rust); }
+  .bp-card.sage { border-left-color: var(--sage); }
+
+  .bp-card-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+  }
+
+  .bp-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1a0a00;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .bp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bp-list li {
+    font-size: 0.88rem;
+    color: #2d1500;
+    line-height: 1.5;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .bp-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--caramel);
+    font-size: 0.75rem;
+    top: 2px;
+  }
+
+  .bp-text {
+    font-size: 0.88rem;
+    color: #2d1500;
+    line-height: 1.7;
+  }
+
+  .finance-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .finance-table th {
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--medium);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .finance-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    color: #2d1500;
+  }
+
+  .finance-table td:last-child {
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--caramel);
+  }
+
+  .finance-table .total td {
+    font-weight: 600;
+    color: #1a0a00;
+    border-top: 2px solid #1a0a00;
+    padding-top: 12px;
+  }
+
+  .finance-table .total td:last-child {
+    color: var(--rust);
+    font-size: 1.05rem;
+  }
+
+  .role-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .role-card {
+    background: #f5ead8;
+    padding: 10px 14px;
+    border-radius: 2px;
+    font-size: 0.8rem;
+  }
+
+  .role-card strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    color: #1a0a00;
+    margin-bottom: 2px;
+    font-size: 0.85rem;
+  }
+
+  .role-card span { color: rgba(26,10,0,0.55); font-size: 0.75rem; }
+
+  /* ======================== MARKETING SECTION ======================== */
+  #marketing-section {
+    background: var(--bg);
+    padding: 60px 0 80px;
+    display: none;
+  }
+  #marketing-section.active { display: block; }
+
+  .mkt-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .mkt-title {
+    font-family: 'Abril Fatface', serif;
+    font-size: 2.8rem;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+
+  .mkt-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .mkt-grid {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .mkt-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(200,131,42,0.2);
+    border-radius: 2px;
+    padding: 32px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .mkt-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(200,131,42,0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .mkt-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mkt-list li {
+    font-size: 0.85rem;
+    color: rgba(245,234,216,0.75);
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .mkt-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--caramel);
+    font-size: 0.5rem;
+    top: 5px;
+  }
+
+  .sample-post {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .post-top {
+    background: var(--espresso);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .post-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--caramel);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .post-handle {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--cream);
+  }
+
+  .post-time { font-size: 0.7rem; color: rgba(245,234,216,0.4); }
+
+  .post-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--medium) 0%, var(--caramel) 50%, var(--cream) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .post-img::after {
+    content: 'skyside coffee';
+    position: absolute;
+    bottom: 16px;
+    right: 0;
+    left: 0;
+    text-align: center;
+    font-family: 'Abril Fatface', serif;
+    font-size: 1.1rem;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .post-caption {
+    padding: 14px 16px;
+    font-size: 0.8rem;
+    color: var(--dark-roast);
+    line-height: 1.5;
+  }
+
+  .post-tags {
+    color: #1a73e8;
+    font-size: 0.75rem;
+    margin-top: 6px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabs">
+  <button class="tab active" onclick="showTab('logo')">🏷️ Logo & Brand</button>
+  <button class="tab" onclick="showTab('menu')">☕ Menu</button>
+  <button class="tab" onclick="showTab('business')">📋 Business Plan</button>
+  <button class="tab" onclick="showTab('marketing')">📣 Marketing</button>
+</nav>
+
+<!-- ======================== LOGO ======================== -->
+<section id="logo-section" class="section active">
+  <div class="logo-container">
+    <!-- SVG SUNSET LOGO -->
+    <div class="logo-svg-wrap">
+      <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" class="logo-svg">
+        <defs>
+          <!-- Sunset sky gradient: deep red top → orange mid → yellow at horizon -->
+          <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#0d0005"/>
+            <stop offset="25%"  stop-color="#7a1010"/>
+            <stop offset="55%"  stop-color="#d94f1e"/>
+            <stop offset="78%"  stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#ffe040"/>
+          </linearGradient>
+          <!-- Sun core glow -->
+          <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fff4a0"/>
+            <stop offset="40%"  stop-color="#ffe040"/>
+            <stop offset="75%"  stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Wide sun halo -->
+          <radialGradient id="haloGrad" cx="50%" cy="100%" r="80%">
+            <stop offset="0%"   stop-color="#ffe040" stop-opacity="0.5"/>
+            <stop offset="40%"  stop-color="#f0820a" stop-opacity="0.25"/>
+            <stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Gold ring gradient -->
+          <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stop-color="#ffe040"/>
+            <stop offset="50%"  stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#ffe040"/>
+          </linearGradient>
+          <!-- Clip to circle -->
+          <clipPath id="cc">
+            <circle cx="170" cy="170" r="146"/>
+          </clipPath>
+          <!-- Sun glow filter -->
+          <filter id="sunBlur" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="7"/>
+          </filter>
+          <!-- Text glow -->
+          <filter id="txtGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- ── Single outline ring only ── -->
+        <circle cx="170" cy="170" r="146" fill="none" stroke="url(#ringGrad)" stroke-width="2.5" opacity="0.8"/>
+
+        <!-- ── Sky background ── -->
+        <circle cx="170" cy="170" r="146" fill="url(#skyGrad)"/>
+
+        <!-- ── Wide horizon halo ── -->
+        <rect x="24" y="24" width="292" height="292" fill="url(#haloGrad)" clip-path="url(#cc)"/>
+
+        <!-- ── Sun glow (soft) ── -->
+        <circle cx="170" cy="213" r="55" fill="#ffe040" opacity="0.18" filter="url(#sunBlur)" clip-path="url(#cc)"/>
+
+        <!-- ── Sun (half disc on horizon) ── -->
+        <path d="M 126,213 A 44,44 0 0,1 214,213 Z" fill="url(#sunGrad)" clip-path="url(#cc)"/>
+        <!-- sun inner highlight -->
+        <path d="M 134,213 A 36,36 0 0,1 206,213 Z" fill="#fff4a0" opacity="0.25" clip-path="url(#cc)"/>
+
+        <!-- ── Cityscape silhouette (black buildings) ── -->
+        <g fill="#0a0a0a" clip-path="url(#cc)">
+          <!-- far-left short block -->
+          <rect x="24"  y="196" width="18" height="17"/>
+          <!-- block with small rooftop notch -->
+          <rect x="38"  y="188" width="14" height="25"/>
+          <rect x="44"  y="184" width="5"  height="4"/>
+          <!-- medium building -->
+          <rect x="50"  y="178" width="20" height="35"/>
+          <!-- antenna -->
+          <rect x="59"  y="168" width="2"  height="10"/>
+          <!-- stepped tower left -->
+          <rect x="68"  y="190" width="12" height="23"/>
+          <rect x="70"  y="183" width="8"  height="7"/>
+          <rect x="72"  y="176" width="4"  height="7"/>
+          <!-- thin tall building -->
+          <rect x="78"  y="163" width="10" height="50"/>
+          <rect x="82"  y="157" width="2"  height="6"/>
+          <!-- wide mid-left block -->
+          <rect x="86"  y="182" width="22" height="31"/>
+          <!-- window grid illusion -->
+          <rect x="90"  y="185" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="96"  y="185" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="90"  y="192" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="96"  y="192" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <!-- stepped skyscraper left-center -->
+          <rect x="106" y="193" width="14" height="20"/>
+          <rect x="108" y="184" width="10" height="9"/>
+          <rect x="110" y="172" width="6"  height="12"/>
+          <rect x="112" y="160" width="2"  height="12"/>
+          <!-- tallest center-left tower -->
+          <rect x="118" y="170" width="16" height="43"/>
+          <rect x="120" y="156" width="12" height="14"/>
+          <rect x="123" y="148" width="6"  height="8"/>
+          <rect x="125" y="140" width="2"  height="8"/>
+          <!-- CENTER skyscraper — tallest -->
+          <rect x="152" y="155" width="18" height="58"/>
+          <rect x="154" y="143" width="14" height="12"/>
+          <rect x="157" y="133" width="8"  height="10"/>
+          <rect x="160" y="123" width="2"  height="10"/>
+          <!-- flanking center towers -->
+          <rect x="138" y="175" width="14" height="38"/>
+          <rect x="140" y="165" width="10" height="10"/>
+          <rect x="174" y="172" width="14" height="41"/>
+          <rect x="176" y="162" width="10" height="10"/>
+          <!-- right-center step tower -->
+          <rect x="186" y="183" width="16" height="30"/>
+          <rect x="188" y="173" width="12" height="10"/>
+          <rect x="191" y="163" width="6"  height="10"/>
+          <!-- wide right block -->
+          <rect x="200" y="185" width="20" height="28"/>
+          <rect x="204" y="188" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="210" y="188" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="204" y="195" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <rect x="210" y="195" width="3"  height="3" fill="#1a0a00" opacity="0.6"/>
+          <!-- thin tall right -->
+          <rect x="218" y="165" width="10" height="48"/>
+          <rect x="222" y="158" width="2"  height="7"/>
+          <!-- stepped tower right -->
+          <rect x="226" y="186" width="12" height="27"/>
+          <rect x="228" y="179" width="8"  height="7"/>
+          <rect x="230" y="172" width="4"  height="7"/>
+          <!-- medium right building -->
+          <rect x="236" y="179" width="18" height="34"/>
+          <rect x="244" y="170" width="2"  height="9"/>
+          <!-- small far-right buildings -->
+          <rect x="252" y="191" width="14" height="22"/>
+          <rect x="264" y="188" width="12" height="25"/>
+          <rect x="274" y="194" width="16" height="19"/>
+          <rect x="288" y="198" width="14" height="15"/>
+          <!-- ground fill -->
+          <rect x="24"  y="213" width="292" height="103"/>
+        </g>
+
+
+        <!-- Straight text below cityscape, not arched -->
+        <text x="170" y="248" font-family="'DM Sans',sans-serif" font-size="9" font-weight="600" letter-spacing="4" fill="#f0820a" opacity="0.85" text-anchor="middle">DOWNTOWN · PHOENIX, AZ</text>
+
+        <!-- ── Brand name centered (above skyline) ── -->
+        <text x="170" y="112" font-family="'Abril Fatface',serif" font-size="28" fill="#fff4a0" text-anchor="middle" filter="url(#txtGlow)" letter-spacing="2">SKYSIDE</text>
+        <text x="170" y="132" font-family="'Abril Fatface',serif" font-size="15" fill="#ffe040" text-anchor="middle" letter-spacing="10" filter="url(#txtGlow)" opacity="0.95">COFFEE</text>
+
+        <!-- ── Star separators ── -->
+        <text x="170" y="147" font-size="7" fill="#ffe040" text-anchor="middle" opacity="0.8">✦ ✦ ✦</text>
+      </svg>
+    </div>
+
+    <div class="brand-info">
+      <div class="brand-name-display">Skyside Coffee</div>
+      <div class="brand-subtitle">Phoenix, AZ · Common Ground & High Ground</div>
+      <p class="brand-mission">"Start grounded, fuel your grind, and rise higher — catch the horizon at Skyside Coffee, Downtown Phoenix."</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:40px;width:100%;max-width:480px;padding:0 16px">
+
+        <!-- Espresso Drinks -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,168,48,0.2);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)">
+          <div style="font-size:1.8rem;margin-bottom:8px">☕</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Espresso Drinks</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Lattes, cappuccinos, macchiatos & more</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $2.50</div>
+        </div>
+
+        <!-- Specialty Drinks -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,168,48,0.2);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)">
+          <div style="font-size:1.8rem;margin-bottom:8px">✨</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Specialty Drinks</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Caramel Cloud, Honey Oat & more</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $5.50</div>
+        </div>
+
+        <!-- Cold Drinks -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,168,48,0.2);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)">
+          <div style="font-size:1.8rem;margin-bottom:8px">🧊</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Cold Drinks</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Cold brew, iced lattes, refreshers</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $4.00</div>
+        </div>
+
+        <!-- Teas -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,168,48,0.2);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)">
+          <div style="font-size:1.8rem;margin-bottom:8px">🍵</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Teas</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Chai, Violet Mist, hot & iced teas</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $3.00</div>
+        </div>
+
+        <!-- Bites -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(232,168,48,0.2);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(0,0,0,0.3)">
+          <div style="font-size:1.8rem;margin-bottom:8px">🥐</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Bites & Add-Ons</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Avocado toast, English muffin & more</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $3.50</div>
+        </div>
+
+        <!-- Build Your Own -->
+        <div style="background:linear-gradient(135deg,rgba(232,168,48,0.12),rgba(200,131,42,0.08));border:1px solid rgba(232,168,48,0.4);border-radius:10px;text-align:center;padding:18px 10px;box-shadow:0 6px 20px rgba(232,168,48,0.15);position:relative">
+          <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a0a00;font-size:0.48rem;font-weight:700;letter-spacing:0.08em;padding:2px 8px;border-radius:20px;text-transform:uppercase;white-space:nowrap">Unique to Skyside</div>
+          <div style="font-size:1.8rem;margin-bottom:8px">🛠️</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:4px">Build Your Own</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Pick your base, milk, flavor & finish</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $4.50</div>
+        </div>
+
+        <!-- Golden Hour — full width -->
+        <div style="grid-column:1/-1;background:linear-gradient(135deg,rgba(217,79,30,0.15),rgba(240,130,10,0.1));border:1px solid rgba(240,130,10,0.35);border-radius:10px;text-align:center;padding:18px 12px;box-shadow:0 6px 20px rgba(240,130,10,0.15);position:relative">
+          <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--caramel);color:#fff;font-size:0.48rem;font-weight:700;letter-spacing:0.08em;padding:2px 10px;border-radius:20px;text-transform:uppercase;white-space:nowrap">High Ground Only · 4pm–9pm</div>
+          <div style="font-size:1.8rem;margin-bottom:8px">🌅</div>
+          <div style="font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:var(--text);margin-bottom:4px">Golden Hour Menu</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);line-height:1.4;margin-bottom:8px">Exclusive sunset drinks upstairs — Sunset Espresso, Horizon Cold Brew & more</div>
+          <div style="font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold)">From $7.50</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== MENU ======================== -->
+<section id="menu-section" class="section">
+  <div class="menu-header">
+    <div class="menu-logo-small">
+      <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" style="width:80px;height:80px;filter:drop-shadow(0 4px 16px rgba(232,168,48,0.3))">
+        <defs>
+          <linearGradient id="mSkyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0d0005"/>
+            <stop offset="25%" stop-color="#7a1010"/>
+            <stop offset="55%" stop-color="#d94f1e"/>
+            <stop offset="78%" stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#ffe040"/>
+          </linearGradient>
+          <radialGradient id="mSunGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#fff4a0"/>
+            <stop offset="40%" stop-color="#ffe040"/>
+            <stop offset="75%" stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="mHaloGrad" cx="50%" cy="100%" r="80%">
+            <stop offset="0%" stop-color="#ffe040" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="mRingGrad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ffe040"/>
+            <stop offset="50%" stop-color="#f0820a"/>
+            <stop offset="100%" stop-color="#ffe040"/>
+          </linearGradient>
+          <clipPath id="mcc"><circle cx="170" cy="170" r="146"/></clipPath>
+          <filter id="mSunBlur"><feGaussianBlur stdDeviation="7"/></filter>
+          <filter id="mTxtGlow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <circle cx="170" cy="170" r="146" fill="url(#mSkyGrad)"/>
+        <rect x="24" y="24" width="292" height="292" fill="url(#mHaloGrad)" clip-path="url(#mcc)"/>
+        <circle cx="170" cy="213" r="55" fill="#ffe040" opacity="0.18" filter="url(#mSunBlur)" clip-path="url(#mcc)"/>
+        <path d="M 126,213 A 44,44 0 0,1 214,213 Z" fill="url(#mSunGrad)" clip-path="url(#mcc)"/>
+        <g fill="#0a0a0a" clip-path="url(#mcc)">
+          <rect x="24" y="196" width="18" height="17"/><rect x="38" y="188" width="14" height="25"/><rect x="50" y="178" width="20" height="35"/><rect x="59" y="168" width="2" height="10"/><rect x="68" y="190" width="12" height="23"/><rect x="70" y="183" width="8" height="7"/><rect x="72" y="176" width="4" height="7"/><rect x="78" y="163" width="10" height="50"/><rect x="82" y="157" width="2" height="6"/><rect x="86" y="182" width="22" height="31"/><rect x="106" y="193" width="14" height="20"/><rect x="108" y="184" width="10" height="9"/><rect x="110" y="172" width="6" height="12"/><rect x="112" y="160" width="2" height="12"/><rect x="118" y="170" width="16" height="43"/><rect x="120" y="156" width="12" height="14"/><rect x="123" y="148" width="6" height="8"/><rect x="125" y="140" width="2" height="8"/><rect x="152" y="155" width="18" height="58"/><rect x="154" y="143" width="14" height="12"/><rect x="157" y="133" width="8" height="10"/><rect x="160" y="123" width="2" height="10"/><rect x="138" y="175" width="14" height="38"/><rect x="140" y="165" width="10" height="10"/><rect x="174" y="172" width="14" height="41"/><rect x="176" y="162" width="10" height="10"/><rect x="186" y="183" width="16" height="30"/><rect x="188" y="173" width="12" height="10"/><rect x="191" y="163" width="6" height="10"/><rect x="200" y="185" width="20" height="28"/><rect x="218" y="165" width="10" height="48"/><rect x="222" y="158" width="2" height="7"/><rect x="226" y="186" width="12" height="27"/><rect x="228" y="179" width="8" height="7"/><rect x="230" y="172" width="4" height="7"/><rect x="236" y="179" width="18" height="34"/><rect x="244" y="170" width="2" height="9"/><rect x="252" y="191" width="14" height="22"/><rect x="264" y="188" width="12" height="25"/><rect x="274" y="194" width="16" height="19"/><rect x="288" y="198" width="14" height="15"/><rect x="24" y="213" width="292" height="103"/>
+        </g>
+        <circle cx="170" cy="170" r="146" fill="none" stroke="url(#mRingGrad)" stroke-width="2.5" opacity="0.8"/>
+        <text x="170" y="112" font-family="'Abril Fatface',serif" font-size="28" fill="#fff4a0" text-anchor="middle" filter="url(#mTxtGlow)" letter-spacing="2">SKYSIDE</text>
+        <text x="170" y="132" font-family="'Abril Fatface',serif" font-size="15" fill="#ffe040" text-anchor="middle" letter-spacing="10" filter="url(#mTxtGlow)" opacity="0.95">COFFEE</text>
+        <text x="170" y="147" font-size="7" fill="#ffe040" text-anchor="middle" opacity="0.8">✦ ✦ ✦</text>
+        <text x="170" y="248" font-family="'DM Sans',sans-serif" font-size="9" font-weight="600" letter-spacing="4" fill="#f0820a" opacity="0.85" text-anchor="middle">DOWNTOWN · PHOENIX, AZ</text>
+      </svg>
+    </div>
+    <div class="menu-brand">Skyside Coffee</div>
+    <div class="menu-rule"><span>✦</span></div>
+    <div class="menu-sub">Common Ground · High Ground · Phoenix, AZ</div>
+  </div>
+
+  <div class="menu-grid">
+
+    <!-- ESPRESSO DRINKS -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">☕</span>
+        <span class="cat-title">Espresso Drinks</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Espresso</div>
+            <div class="item-desc">Single or double shot, freshly pulled</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">Single <strong>$2.50</strong></div>
+            <div class="size-row">Double <strong>$3.25</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Americano</div>
+            <div class="item-desc">Espresso + hot water, bold & clean</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$4.00</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Latte</div>
+            <div class="item-desc">Espresso + steamed milk, silky smooth</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$6.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Cappuccino</div>
+            <div class="item-desc">Equal parts espresso, steamed & foam milk</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">8oz <strong>$4.00</strong></div>
+            <div class="size-row">12oz <strong>$6.00</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Mocha</div>
+            <div class="item-desc">Espresso + chocolate sauce + steamed milk</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.25</strong></div>
+            <div class="size-row">16oz <strong>$5.75</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Macchiato <span class="badge">Popular</span></div>
+            <div class="item-desc">Espresso marked with a dollop of foam</div>
+          </div>
+          <div class="item-price">$4.75</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SPECIALTY DRINKS -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">✨</span>
+        <span class="cat-title">Specialty Drinks</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Caramel Cloud Latte <span class="badge">Best Seller</span></div>
+            <div class="item-desc">Espresso, caramel sauce, whipped cream, sea salt</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.75</strong></div>
+            <div class="size-row">16oz <strong>$6.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Honey Oat Latte</div>
+            <div class="item-desc">Espresso, oat milk, local honey, cinnamon</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.00</strong></div>
+            <div class="size-row">16oz <strong>$7.00</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Lavender Fog</div>
+            <div class="item-desc">Earl Grey, lavender syrup, steamed milk</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$6.25</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Brown Sugar Shaker</div>
+            <div class="item-desc">Espresso, brown sugar, oat milk, over ice</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.75</strong></div>
+            <div class="size-row">16oz <strong>$6.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Matcha Latte</div>
+            <div class="item-desc">Ceremonial matcha, steamed milk, honey</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.25</strong></div>
+            <div class="size-row">16oz <strong>$5.75</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOT COFFEE -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">🔥</span>
+        <span class="cat-title">Hot Coffee</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Drip Coffee</div>
+            <div class="item-desc">House blend, freshly brewed</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$4.00</strong></div>
+            <div class="size-row">16oz <strong>$4.75</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Pour Over</div>
+            <div class="item-desc">Single-origin, hand-poured to order</div>
+          </div>
+          <div class="item-price">$5.75</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">French Press</div>
+            <div class="item-desc">Bold, full-body, 12oz press pot</div>
+          </div>
+          <div class="item-price">$4.75</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Hot Chocolate</div>
+            <div class="item-desc">Rich chocolate, steamed milk, whip</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$4.00</strong></div>
+            <div class="size-row">16oz <strong>$4.75</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLD DRINKS -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">🧊</span>
+        <span class="cat-title">Cold Drinks</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Cold Brew <span class="badge">Popular</span></div>
+            <div class="item-desc">Steeped 12hrs, smooth & never bitter</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$6.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Iced Latte</div>
+            <div class="item-desc">Espresso + cold milk over ice</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.00</strong></div>
+            <div class="size-row">16oz <strong>$5.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Iced Mocha</div>
+            <div class="item-desc">Espresso, chocolate, cold milk, ice</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$6.25</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Refresher Lemonade</div>
+            <div class="item-desc">Fresh lemon, fruit syrup, sparkling water</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$4.00</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Smoothie</div>
+            <div class="item-desc">Daily blend — ask your barista</div>
+          </div>
+          <div class="item-price">$5.75</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEA -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">🍵</span>
+        <span class="cat-title">Teas</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Classic Hot Tea</div>
+            <div class="item-desc">Green, Black, Chamomile, Peppermint</div>
+          </div>
+          <div class="item-price">$3.00</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Chai Latte</div>
+            <div class="item-desc">Spiced chai concentrate, steamed milk</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.00</strong></div>
+            <div class="size-row">16oz <strong>$6.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Iced Chai</div>
+            <div class="item-desc">Chai concentrate, milk, ice</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$6.00</strong></div>
+            <div class="size-row">16oz <strong>$5.50</strong></div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Violet Mist</div>
+            <div class="item-desc">Earl Grey, vanilla, steamed milk</div>
+          </div>
+          <div class="size-prices">
+            <div class="size-row">12oz <strong>$5.50</strong></div>
+            <div class="size-row">16oz <strong>$4.00</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOD & EXTRAS -->
+    <div class="menu-category">
+      <div class="cat-header">
+        <span class="cat-icon">🥐</span>
+        <span class="cat-title">Bites & Add-Ons</span>
+      </div>
+      <div class="cat-items">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Butter Croissant</div>
+            <div class="item-desc">Freshly baked, flaky & warm</div>
+          </div>
+          <div class="item-price">$3.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">English Muffin</div>
+            <div class="item-desc">Egg, cheese, bacon</div>
+          </div>
+          <div class="item-price">$4.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Avocado Toast</div>
+            <div class="item-desc">Toasted bread, mashed avocado, lemon juice, salt & pepper</div>
+          </div>
+          <div class="item-price">$8.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Add a Shot</div>
+            <div class="item-desc">Extra espresso shot</div>
+          </div>
+          <div class="item-price">$0.75</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Flavored Syrup</div>
+            <div class="item-desc">Vanilla, Hazelnut, Caramel, Lavender</div>
+          </div>
+          <div class="item-price">$0.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Alt Milk Upgrade</div>
+            <div class="item-desc">Oat, Almond, or Soy</div>
+          </div>
+          <div class="item-price">$0.75</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BUILD YOUR OWN DIVIDER -->
+  <div style="max-width:1100px;margin:48px auto 32px;text-align:center;padding:0 20px">
+    <div style="display:flex;align-items:center;gap:20px;justify-content:center;">
+      <div style="height:1px;flex:1;background:linear-gradient(to right,transparent,#c8832a);opacity:0.5"></div>
+      <div>
+        <div style="font-family:'Abril Fatface',serif;font-size:2rem;background:linear-gradient(135deg,#ffe040 0%,#f0820a 40%,#ffe040 70%,#c8832a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.04em;">Build Your Own Drink</div>
+        <div style="font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8832a;margin-top:6px;opacity:0.8">Mix · Match · Make It Yours</div>
+      </div>
+      <div style="height:1px;flex:1;background:linear-gradient(to left,transparent,#c8832a);opacity:0.5"></div>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;margin-bottom:32px">
+
+      <!-- STEP 1: BASE -->
+      <div class="menu-category">
+        <div class="cat-header">
+          <span class="cat-icon">1️⃣</span>
+          <span class="cat-title">Step 1 — Choose Your Base</span>
+        </div>
+        <div class="cat-items">
+          <div class="menu-item"><div class="item-info"><div class="item-name">Espresso Shot</div><div class="item-desc">Bold, rich, full-body foundation</div></div><div class="item-price">Included</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Cold Brew</div><div class="item-desc">Smooth, steeped 12hrs, never bitter</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Matcha</div><div class="item-desc">Earthy, ceremonial grade green tea</div></div><div class="item-price">+$0.75</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Chai Concentrate</div><div class="item-desc">Spiced, warming, bold</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Decaf Espresso</div><div class="item-desc">All the flavor, none of the buzz</div></div><div class="item-price">Included</div></div>
+        </div>
+      </div>
+
+      <!-- STEP 2: MILK -->
+      <div class="menu-category">
+        <div class="cat-header">
+          <span class="cat-icon">2️⃣</span>
+          <span class="cat-title">Step 2 — Choose Your Milk</span>
+        </div>
+        <div class="cat-items">
+          <div class="menu-item"><div class="item-info"><div class="item-name">Whole Milk</div><div class="item-desc">Creamy, classic, steams beautifully</div></div><div class="item-price">Included</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Oat Milk</div><div class="item-desc">Smooth, naturally sweet, barista blend</div></div><div class="item-price">+$0.75</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Almond Milk</div><div class="item-desc">Light, nutty, slightly sweet</div></div><div class="item-price">+$0.75</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Coconut Milk</div><div class="item-desc">Tropical, rich, pairs with bold bases</div></div><div class="item-price">+$0.75</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">No Milk / Black</div><div class="item-desc">Pure, undiluted, strong</div></div><div class="item-price">Included</div></div>
+        </div>
+      </div>
+
+      <!-- STEP 3: FLAVOR -->
+      <div class="menu-category">
+        <div class="cat-header">
+          <span class="cat-icon">3️⃣</span>
+          <span class="cat-title">Step 3 — Add a Flavor</span>
+        </div>
+        <div class="cat-items">
+          <div class="menu-item"><div class="item-info"><div class="item-name">Vanilla</div><div class="item-desc">Smooth, sweet, universally loved</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Caramel</div><div class="item-desc">Buttery, rich, golden sweet</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Hazelnut</div><div class="item-desc">Nutty, warm, classic pairing</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Brown Sugar</div><div class="item-desc">Warm, molasses-sweet, bold</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Lavender</div><div class="item-desc">Floral, calming, subtly sweet</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Honey</div><div class="item-desc">Natural, light, golden sweetness</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Blood Orange</div><div class="item-desc">Citrusy, bright, bold contrast</div></div><div class="item-price">+$0.75</div></div>
+        </div>
+      </div>
+
+      <!-- STEP 4: TOPPINGS -->
+      <div class="menu-category">
+        <div class="cat-header">
+          <span class="cat-icon">4️⃣</span>
+          <span class="cat-title">Step 4 — Finish It Off</span>
+        </div>
+        <div class="cat-items">
+          <div class="menu-item"><div class="item-info"><div class="item-name">Whipped Cream</div><div class="item-desc">Classic, light, indulgent</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Cold Foam</div><div class="item-desc">Silky, velvety, sits on top</div></div><div class="item-price">+$0.75</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Sea Salt Sprinkle</div><div class="item-desc">Enhances sweetness, adds depth</div></div><div class="item-price">+$0.25</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Cinnamon Dust</div><div class="item-desc">Warm spice, classic finish</div></div><div class="item-price">+$0.25</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Chocolate Drizzle</div><div class="item-desc">Rich, dark, indulgent swirl</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Caramel Drizzle</div><div class="item-desc">Buttery, golden, signature look</div></div><div class="item-price">+$0.50</div></div>
+          <div class="menu-item"><div class="item-info"><div class="item-name">Extra Espresso Shot</div><div class="item-desc">Double the kick</div></div><div class="item-price">+$0.75</div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- PRICE NOTE -->
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="display:inline-block;background:#ffffff;border-left:4px solid var(--caramel);padding:14px 28px;border-radius:2px;box-shadow:0 4px 20px rgba(0,0,0,0.2)">
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1a0a00;margin-bottom:4px">Build Your Own starts at $4.50</div>
+        <div style="font-size:0.78rem;color:rgba(26,10,0,0.55)">Base drink + milk included · Add-ons priced individually · Name your creation at the counter</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HALL OF FAME DIVIDER -->
+  <div style="max-width:1100px;margin:0 auto 32px;text-align:center;padding:0 20px">
+    <div style="display:flex;align-items:center;gap:20px;justify-content:center;">
+      <div style="height:1px;flex:1;background:linear-gradient(to right,transparent,var(--gold));opacity:0.5"></div>
+      <div>
+        <div style="font-family:'Abril Fatface',serif;font-size:2rem;background:linear-gradient(135deg,#ffe040 0%,#f0820a 40%,#ffe040 70%,#c8832a 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.04em;">Hall of Fame</div>
+        <div style="font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin-top:6px;opacity:0.85">Customer Creations · Legend Drinks · Named by You</div>
+      </div>
+      <div style="height:1px;flex:1;background:linear-gradient(to left,transparent,var(--gold));opacity:0.5"></div>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto 60px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px">
+
+    <!-- HOF CARD 1 -->
+    <div style="background:#ffffff;border-radius:2px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2);border-bottom:4px solid var(--gold)">
+      <div style="background:linear-gradient(135deg,#1a0a00,#5c3317);padding:16px;text-align:center">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#ffe040,#f0820a);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.4)">☕</div>
+        <div style="font-family:'Abril Fatface',serif;font-size:1rem;color:var(--cream)">The Desert Sun</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:2px">Created by: Maria R.</div>
+      </div>
+      <div style="padding:16px">
+        <div style="font-size:0.78rem;font-weight:600;color:#1a0a00;margin-bottom:8px;font-family:'Playfair Display',serif">Ingredients:</div>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(26,10,0,0.65);display:flex;flex-direction:column;gap:4px">
+          <li>→ Double Espresso</li>
+          <li>→ Oat Milk</li>
+          <li>→ Blood Orange Syrup</li>
+          <li>→ Honey</li>
+          <li>→ Cold Foam</li>
+          <li>→ Sea Salt Sprinkle</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HOF CARD 2 -->
+    <div style="background:#ffffff;border-radius:2px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2);border-bottom:4px solid var(--gold)">
+      <div style="background:linear-gradient(135deg,#1a0a00,#5c3317);padding:16px;text-align:center">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#ffe040,#c8832a);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.4)">☕</div>
+        <div style="font-family:'Abril Fatface',serif;font-size:1rem;color:var(--cream)">The Phoenix Rise</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:2px">Created by: James T.</div>
+      </div>
+      <div style="padding:16px">
+        <div style="font-size:0.78rem;font-weight:600;color:#1a0a00;margin-bottom:8px;font-family:'Playfair Display',serif">Ingredients:</div>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(26,10,0,0.65);display:flex;flex-direction:column;gap:4px">
+          <li>→ Cold Brew Base</li>
+          <li>→ Coconut Milk</li>
+          <li>→ Brown Sugar</li>
+          <li>→ Caramel Drizzle</li>
+          <li>→ Cinnamon Dust</li>
+          <li>→ Whipped Cream</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HOF CARD 3 -->
+    <div style="background:#ffffff;border-radius:2px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.2);border-bottom:4px solid var(--gold)">
+      <div style="background:linear-gradient(135deg,#1a0a00,#5c3317);padding:16px;text-align:center">
+        <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#7a8c5c,#ffe040);margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px rgba(0,0,0,0.4)">🍵</div>
+        <div style="font-family:'Abril Fatface',serif;font-size:1rem;color:var(--cream)">Horizon Mist</div>
+        <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-top:2px">Created by: Sofia K.</div>
+      </div>
+      <div style="padding:16px">
+        <div style="font-size:0.78rem;font-weight:600;color:#1a0a00;margin-bottom:8px;font-family:'Playfair Display',serif">Ingredients:</div>
+        <ul style="list-style:none;font-size:0.75rem;color:rgba(26,10,0,0.65);display:flex;flex-direction:column;gap:4px">
+          <li>→ Matcha Base</li>
+          <li>→ Oat Milk</li>
+          <li>→ Lavender Syrup</li>
+          <li>→ Honey</li>
+          <li>→ Cold Foam</li>
+          <li>→ Chocolate Drizzle</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- HOF CARD 4 — YOUR CREATION -->
+    <div style="background:var(--bg2);border-radius:2px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.3);border-bottom:4px solid var(--caramel);border:2px dashed rgba(232,168,48,0.3)">
+      <div style="padding:32px 16px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;min-height:220px;gap:12px">
+        <div style="width:70px;height:70px;border-radius:50%;border:2px dashed rgba(232,168,48,0.4);display:flex;align-items:center;justify-content:center;font-size:2rem;color:rgba(232,168,48,0.4)">+</div>
+        <div style="font-family:'Abril Fatface',serif;font-size:1rem;color:rgba(232,168,48,0.6)">Your Creation</div>
+        <div style="font-size:0.75rem;color:rgba(232,221,208,0.4);text-align:center;line-height:1.5">Build your drink, name it, and join the Hall of Fame</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GOLDEN HOUR DIVIDER -->
+  <div style="max-width:1100px;margin:48px auto 32px;text-align:center;padding:0 20px">
+    <div style="display:flex;align-items:center;gap:20px;justify-content:center;">
+      <div style="height:1px;flex:1;background:linear-gradient(to right,transparent,#c8832a);opacity:0.5"></div>
+      <div>
+        <div style="font-family:'Abril Fatface',serif;font-size:2rem;background:linear-gradient(135deg,#c8832a 0%,#e8a830 35%,#ffe040 55%,#e8a830 75%,#a0520f 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:0.04em;">Golden Hour Menu</div>
+        <div style="font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;color:#c8832a;margin-top:6px;opacity:0.8">High Ground · Upstairs Only · Available 4pm–9pm</div>
+      </div>
+      <div style="height:1px;flex:1;background:linear-gradient(to left,transparent,#c8832a);opacity:0.5"></div>
+    </div>
+  </div>
+
+  <div style="max-width:1100px;margin:0 auto;padding:0 20px 60px">
+    <div class="menu-category" style="border-bottom-color:var(--gold)">
+      <div class="cat-header" style="background:linear-gradient(135deg,var(--dark-roast),var(--medium))">
+        <span class="cat-icon">
+          <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" style="width:32px;height:32px;vertical-align:middle">
+            <defs>
+              <linearGradient id="gSkyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d0005"/><stop offset="25%" stop-color="#7a1010"/><stop offset="55%" stop-color="#d94f1e"/><stop offset="78%" stop-color="#f0820a"/><stop offset="100%" stop-color="#ffe040"/></linearGradient>
+              <radialGradient id="gSunGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff4a0"/><stop offset="40%" stop-color="#ffe040"/><stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/></radialGradient>
+              <radialGradient id="gHalo" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#ffe040" stop-opacity="0.5"/><stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/></radialGradient>
+              <linearGradient id="gRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffe040"/><stop offset="50%" stop-color="#f0820a"/><stop offset="100%" stop-color="#ffe040"/></linearGradient>
+              <clipPath id="gcc"><circle cx="170" cy="170" r="146"/></clipPath>
+              <filter id="gBlur"><feGaussianBlur stdDeviation="7"/></filter>
+            </defs>
+            <circle cx="170" cy="170" r="146" fill="url(#gSkyGrad)"/>
+            <rect x="24" y="24" width="292" height="292" fill="url(#gHalo)" clip-path="url(#gcc)"/>
+            <circle cx="170" cy="213" r="55" fill="#ffe040" opacity="0.18" filter="url(#gBlur)" clip-path="url(#gcc)"/>
+            <path d="M 126,213 A 44,44 0 0,1 214,213 Z" fill="url(#gSunGrad)" clip-path="url(#gcc)"/>
+            <g fill="#0a0a0a" clip-path="url(#gcc)">
+              <rect x="24" y="196" width="18" height="17"/><rect x="38" y="188" width="14" height="25"/><rect x="50" y="178" width="20" height="35"/><rect x="68" y="190" width="12" height="23"/><rect x="78" y="163" width="10" height="50"/><rect x="86" y="182" width="22" height="31"/><rect x="106" y="193" width="14" height="20"/><rect x="118" y="170" width="16" height="43"/><rect x="152" y="155" width="18" height="58"/><rect x="138" y="175" width="14" height="38"/><rect x="174" y="172" width="14" height="41"/><rect x="186" y="183" width="16" height="30"/><rect x="200" y="185" width="20" height="28"/><rect x="218" y="165" width="10" height="48"/><rect x="226" y="186" width="12" height="27"/><rect x="236" y="179" width="18" height="34"/><rect x="252" y="191" width="14" height="22"/><rect x="264" y="188" width="12" height="25"/><rect x="274" y="194" width="16" height="19"/><rect x="288" y="198" width="14" height="15"/><rect x="24" y="213" width="292" height="103"/>
+            </g>
+            <circle cx="170" cy="170" r="146" fill="none" stroke="url(#gRing)" stroke-width="3" opacity="0.8"/>
+          </svg>
+        </span>
+        <span class="cat-title">High Ground Exclusives — 4pm–9pm</span>
+      </div>
+      <div class="cat-items" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Sunset Espresso <span class="badge">Signature</span></div>
+            <div class="item-desc">Espresso, blood orange, honey, on ice</div>
+          </div>
+          <div class="item-price">$8.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">The Cloud</div>
+            <div class="item-desc">Vanilla cold foam, lavender, oat milk</div>
+          </div>
+          <div class="item-price">$7.75</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Night Cap</div>
+            <div class="item-desc">Dark chocolate, espresso, cinnamon, steamed milk</div>
+          </div>
+          <div class="item-price">$7.50</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Golden Hour Latte <span class="badge">Popular</span></div>
+            <div class="item-desc">Turmeric, honey, espresso, oat milk</div>
+          </div>
+          <div class="item-price">$8.00</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Starlit Matcha</div>
+            <div class="item-desc">Ceremonial matcha, coconut milk, jasmine syrup</div>
+          </div>
+          <div class="item-price">$7.75</div>
+        </div>
+        <div class="menu-item">
+          <div class="item-info">
+            <div class="item-name">Horizon Cold Brew</div>
+            <div class="item-desc">Cold brew, caramel, salted cream cold foam</div>
+          </div>
+          <div class="item-price">$8.50</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== BUSINESS PLAN ======================== -->
+<section id="business-section" class="section">
+  <div class="bp-header">
+    <div class="bp-title">Business Plan</div>
+    <div class="bp-sub">Skyside Coffee · Common Ground & High Ground · Phoenix, AZ</div>
+  </div>
+
+  <div class="bp-grid">
+
+    <div class="bp-card full">
+      <div class="bp-card-icon">🎯</div>
+      <div class="bp-card-title">Summary</div>
+      <p class="bp-text">Skyside Coffee is a downtown coffee shop located on a corner in the heart of the city. The shop operates across two distinct floors — <strong>Common Ground</strong> (Floor 1) serves the fast-moving morning crowd with speed and efficiency, while <strong>High Ground</strong> (Floor 2) offers a scenic, elevated lounge experience for afternoons, sunsets, and evenings. Accessible via elevator and staircase, High Ground features floor-to-ceiling windows, ambient lighting, and an open-air balcony where guests can watch the horizon unfold in real time — enjoying an exclusive evening menu as the sky shifts from golden hour to nightfall. Together, the two floors serve everyone — commuters, remote workers, students, families, and downtown visitors — under one brand tagline: <em>"Catch the horizon at Skyside."</em></p>
+    </div>
+
+    <div class="bp-card">
+      <div class="bp-card-icon">🏆</div>
+      <div class="bp-card-title">Mission & Vision</div>
+      <ul class="bp-list">
+        <li><strong>Mission:</strong> To serve every customer an exceptional experience, whether they have 3 minutes or 3 hours</li>
+        <li><strong>Vision:</strong> Become downtown's most iconic two-floor coffee destination</li>
+        <li><strong>Values:</strong> Community, craft, atmosphere, and intentional hospitality</li>
+        <li><strong>Floor 1 — Common Ground:</strong> "Your daily grind, perfected"</li>
+        <li><strong>Floor 2 — High Ground:</strong> "Catch the horizon at Skyside"</li>
+      </ul>
+    </div>
+
+    <div class="bp-card">
+      <div class="bp-card-icon">👥</div>
+      <div class="bp-card-title">Target Market</div>
+      <ul class="bp-list">
+        <li>Morning commuters (6–10am) — fast grab & go from Common Ground</li>
+        <li>Remote workers & students (10am–2pm) — settle into High Ground with a view</li>
+        <li>Lunch crowd (11am–1pm) — quick drinks + light bites on either floor</li>
+        <li>Afternoon walkers & shoppers (2–5pm) — impulse stop, iced drinks</li>
+        <li>Evening crowd (5–9pm) — sunset views and Golden Hour menu at High Ground</li>
+        <li><strong>College students</strong> — ASU Downtown, Phoenix College, GCU & all AZ universities via 15% Student Grind discount</li>
+        <li><strong>Office workers</strong> — Daily Grind Pass ($45/mo) for downtown professionals within walking distance</li>
+        <li>Estimated daily customers: 150–300 across both floors</li>
+      </ul>
+    </div>
+
+    <div class="bp-card full">
+      <div class="bp-card-icon">📲</div>
+      <div class="bp-card-title">Skyside App, Student & Office Loyalty Programs</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:4px">
+        <div style="background:#f5ead8;padding:16px;border-radius:2px;border-left:3px solid var(--caramel)">
+          <div style="font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#1a0a00;margin-bottom:8px">📱 Skyside App</div>
+          <ul class="bp-list">
+            <li>Mobile order ahead for both floors</li>
+            <li>10 purchases = 1 free drink</li>
+            <li>Daily 7am deal push notification</li>
+            <li>"Rise Higher" rewards tier with escalating perks</li>
+            <li>Save favorite Build Your Own orders</li>
+          </ul>
+        </div>
+        <div style="background:#f5ead8;padding:16px;border-radius:2px;border-left:3px solid var(--sage)">
+          <div style="font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#1a0a00;margin-bottom:8px">🎓 The Student Grind</div>
+          <ul class="bp-list">
+            <li>15% off with valid student ID — all accredited AZ colleges</li>
+            <li>ASU Downtown, Phoenix College, GCU, Rio Salado eligible</li>
+            <li>Applies to regular menu only — Golden Hour stays premium</li>
+            <li>Stackable with loyalty points</li>
+            <li>Promoted on campus boards & social media</li>
+          </ul>
+        </div>
+        <div style="background:#f5ead8;padding:16px;border-radius:2px;border-left:3px solid var(--rust)">
+          <div style="font-family:'Playfair Display',serif;font-size:0.9rem;font-weight:700;color:#1a0a00;margin-bottom:8px">💼 Daily Grind Pass</div>
+          <ul class="bp-list">
+            <li>$45/mo subscription — 1 drip coffee or tea per day</li>
+            <li>Corporate team accounts for downtown offices</li>
+            <li>10% off catering with 48hr advance notice</li>
+            <li>Priority mobile order queue during morning rush</li>
+            <li>Partner discounts with nearby coworking spaces</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-card">
+      <div class="bp-card-icon">📍</div>
+      <div class="bp-card-title">Location & Operations</div>
+      <ul class="bp-list">
+        <li>Location: Phoenix, AZ — two-floor standalone building</li>
+        <li>Floor 1 — Common Ground: counter-forward, fast checkout, minimal seating, standing bar</li>
+        <li>Floor 2 — High Ground: lounge seating, floor-to-ceiling windows, elevator + staircase access</li>
+        <li>Hours: 6am–9pm daily (High Ground opens at 10am)</li>
+        <li>Golden Hour menu unlocks at 4pm exclusively on High Ground</li>
+        <li>Night lights and ambient shift begins at sunset on High Ground</li>
+      </ul>
+    </div>
+
+    <div class="bp-card accent full">
+      <div class="bp-card-icon">💰</div>
+      <div class="bp-card-title">Startup Costs</div>
+      <table class="finance-table">
+        <tr><th>Item</th><th>Cost</th></tr>
+        <tr><td colspan="2" style="font-family:'Playfair Display',serif;font-weight:700;color:#5c3317;padding-top:14px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase">🏢 Building Construction — Phoenix, AZ</td></tr>
+        <tr><td>2-story commercial build (est. 2,000–3,000 sq ft @ $186–250/sq ft)</td><td>$372,000–750,000</td></tr>
+        <tr><td>Land / corner lot — Downtown Phoenix</td><td>$150,000–400,000</td></tr>
+        <tr><td>Permits, inspections & zoning (Phoenix AZ)</td><td>$2,000–8,000</td></tr>
+        <tr><td>Architect & engineering fees (15–25% of build)</td><td>$55,000–190,000</td></tr>
+        <tr><td>Interior build-out (Floor 1 + Floor 2 lounge + balcony)</td><td>$80,000–180,000</td></tr>
+        <tr><td>Elevator installation</td><td>$20,000–45,000</td></tr>
+        <tr><td colspan="2" style="font-family:'Playfair Display',serif;font-weight:700;color:#5c3317;padding-top:14px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase">☕ Equipment & Supplies</td></tr>
+        <tr><td>Espresso machine</td><td>$12,000–25,000</td></tr>
+        <tr><td>Drip coffee maker</td><td>$1,000–3,500</td></tr>
+        <tr><td>Grinder</td><td>$1,000–3,000</td></tr>
+        <tr><td>Milk pitchers, tools</td><td>$60</td></tr>
+        <tr><td>POS system / cash box</td><td>$1,500–5,000</td></tr>
+        <tr><td>Initial inventory (1 mo)</td><td>$3,000–8,000</td></tr>
+        <tr><td>Cups, lids, sleeves</td><td>$500–2,000</td></tr>
+        <tr><td>Aprons, uniforms</td><td>$60</td></tr>
+        <tr><td colspan="2" style="font-family:'Playfair Display',serif;font-weight:700;color:#5c3317;padding-top:14px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase">🛡️ Insurance — Annual (Phoenix, AZ)</td></tr>
+        <tr><td>General Liability Insurance</td><td>$752–1,260/yr ($63–105/mo)</td></tr>
+        <tr><td>Business Owner's Policy (BOP) — property + liability bundled</td><td>$1,105–1,860/yr ($92–155/mo)</td></tr>
+        <tr><td>Workers' Compensation (per employee)</td><td>$540–660/yr ($45–55/mo)</td></tr>
+        <tr><td>Commercial Property Insurance</td><td>$1,200–3,000/yr</td></tr>
+        <tr><td>Total Insurance Estimate (annually)</td><td>$3,600–6,780/yr</td></tr>
+        <tr><td colspan="2" style="font-family:'Playfair Display',serif;font-weight:700;color:#5c3317;padding-top:14px;font-size:0.82rem;letter-spacing:0.08em;text-transform:uppercase">👷 Employee Pay — Phoenix, AZ (2025)</td></tr>
+        <tr><td>Barista — avg. hourly wage (Indeed/ZipRecruiter Phoenix)</td><td>$15.49–20/hr</td></tr>
+        <tr><td>Shift Lead — avg. hourly wage</td><td>$20–24/hr</td></tr>
+        <tr><td>Café Manager — avg. annual salary</td><td>$40,000–55,000/yr</td></tr>
+        <tr><td>Estimated monthly labor cost (6 employees, ~30 hrs/wk)</td><td>$15,000–20,000/mo</td></tr>
+        <tr><td>Tips (baristas avg. $20/day, not employer cost)</td><td>+$20/day per barista</td></tr>
+        <tr class="total"><td>Total Estimated Startup (Building + Equipment + First Year Ops)</td><td>$750,000–2,000,000</td></tr>
+      </table>
+      <div style="margin-top:16px;padding:12px 16px;background:#f5ead8;border-left:3px solid var(--caramel);border-radius:2px">
+        <div style="font-size:0.78rem;color:#2d1500;line-height:1.6"><strong>💡 Note:</strong> Building costs can be reduced significantly by leasing an existing commercial space instead of building from scratch. A lease in Downtown Phoenix averages <strong>$25–45/sq ft/year</strong>, which could bring initial costs down to <strong>$80,000–250,000</strong> for buildout + first year lease on a 2,000 sq ft space.</div>
+      </div>
+    </div>
+
+    <div class="bp-card sage full">
+      <div class="bp-card-icon">📈</div>
+      <div class="bp-card-title">Revenue Projections</div>
+      <table class="finance-table">
+        <tr><th>Scenario</th><th>Daily Sales</th><th>Avg Ticket</th><th>Monthly Revenue</th></tr>
+        <tr><td>🔴 Low — Opening phase, brand building</td><td>80 sales/day</td><td>$5.50</td><td>~$11,440</td></tr>
+        <tr><td>🟡 Mid — Break-even target, steady foot traffic</td><td>150 sales/day</td><td>$6.50</td><td>~$25,350</td></tr>
+        <tr><td>🟢 High — Both floors active, Golden Hour driving tickets up</td><td>250 sales/day</td><td>$7.00</td><td>~$45,500</td></tr>
+        <tr><td>🚀 Peak — Weekend events, Sunset Saturdays, full capacity</td><td>350 sales/day</td><td>$7.50</td><td>~$68,250</td></tr>
+      </table>
+      <div style="margin-top:16px">
+        <table class="finance-table">
+          <tr><th>Monthly Cost Breakdown</th><th>Estimate</th></tr>
+          <tr><td>Building lease or mortgage payment</td><td>$4,000–12,000</td></tr>
+          <tr><td>Labor — 6 employees avg 30 hrs/wk</td><td>$15,000–20,000</td></tr>
+          <tr><td>Insurance (monthly)</td><td>$500–1,200</td></tr>
+          <tr><td>Inventory & supplies</td><td>$3,000–8,000</td></tr>
+          <tr><td>Utilities (Phoenix heat — AC heavy)</td><td>$800–2,000</td></tr>
+          <tr><td>Marketing</td><td>$500–2,000</td></tr>
+          <tr><td>Software & POS</td><td>$200–500</td></tr>
+          <tr><td>Maintenance & Repairs</td><td>$500–1,500</td></tr>
+          <tr><td>Credit Card Processing</td><td>$500–1,500</td></tr>
+          <tr class="total"><td>Total Monthly Costs</td><td>$24,000–48,700</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div style="background:#f5ead8;padding:12px;border-radius:2px;border-left:3px solid #b84c1e">
+          <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:#b84c1e;font-weight:600">Food Cost Target</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#1a0a00">28–32%</div>
+        </div>
+        <div style="background:#f5ead8;padding:12px;border-radius:2px;border-left:3px solid var(--caramel)">
+          <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--medium);font-weight:600">Profit Margin Target</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#1a0a00">18–25%</div>
+        </div>
+        <div style="background:#f5ead8;padding:12px;border-radius:2px;border-left:3px solid var(--sage)">
+          <div style="font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--sage);font-weight:600">Break-Even Point</div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#1a0a00">155–230 sales/day</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-card">
+      <div class="bp-card-icon">🔄</div>
+      <div class="bp-card-title">Work Roles</div>
+      <div class="role-grid">
+        <div class="role-card">
+          <strong>Head Barista</strong>
+          <span>Beverage prep, quality control</span>
+        </div>
+        <div class="role-card">
+          <strong>Cashier</strong>
+          <span>POS, cash handling, receipts</span>
+        </div>
+        <div class="role-card">
+          <strong>Shift Lead</strong>
+          <span>Team coordination, problem-solving</span>
+        </div>
+        <div class="role-card">
+          <strong>Inventory Mgr</strong>
+          <span>Stock counts, reorder alerts</span>
+        </div>
+        <div class="role-card">
+          <strong>Marketing Lead</strong>
+          <span>Social media, promotions, signage</span>
+        </div>
+        <div class="role-card">
+          <strong>Customer Host</strong>
+          <span>Greet guests, manage flow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bp-card">
+      <div class="bp-card-icon">⚠️</div>
+      <div class="bp-card-title">Risk & Mitigation</div>
+      <ul class="bp-list">
+        <li><strong>Low sales:</strong> Offer daily specials & loyalty cards to drive repeat visits</li>
+        <li><strong>Equipment failure:</strong> Maintain a drip brewer as backup</li>
+        <li><strong>Staff absence:</strong> Cross-train all students on every role</li>
+        <li><strong>Food waste:</strong> Order weekly, track daily usage, adjust pars</li>
+        <li><strong>Competition:</strong> Differentiate with specialty drinks & experience</li>
+      </ul>
+    </div>
+
+    <div class="bp-card full sage">
+      <div class="bp-card-icon">🎓</div>
+      <div class="bp-card-title">Certifications & Compliance</div>
+      <ul class="bp-list" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <li>ServSafe Food Handler Certification</li>
+        <li>ServSafe Manager Certification</li>
+        <li>Food allergy awareness training</li>
+        <li>OSHA workplace safety basics</li>
+        <li>Daily sanitation & cleaning logs</li>
+        <li>School district food service approval</li>
+        <li>Allergen labeling on all menu items</li>
+        <li>Temperature & storage logs maintained</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ======================== MARKETING ======================== -->
+<section id="marketing-section" class="section">
+  <div class="mkt-header">
+    <div class="mkt-title">Marketing Strategy</div>
+    <div class="mkt-sub">Skyside Coffee · Common Ground & High Ground · Phoenix, AZ</div>
+  </div>
+
+  <div class="mkt-grid">
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">📱 Social Media</div>
+      <ul class="mkt-list">
+        <li>Instagram: @skysidecoffee — daily drink photos, High Ground sunset shots, behind-the-scenes barista content</li>
+        <li>Post Golden Hour menu reveal every day at 3:30pm to drive evening traffic upstairs</li>
+        <li>"Sunset Shot of the Day" — repost best customer photos from High Ground windows</li>
+        <li>Use Canva templates in brand colors — warm amber, cream, deep espresso</li>
+        <li>Run weekly "Common Ground vs High Ground" polls — which floor is your vibe?</li>
+        <li>Goal: 1,000 downtown followers within first 3 months</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">🎯 Promotions</div>
+      <ul class="mkt-list">
+        <li>Loyalty stamp card: Buy 9 drinks, get 1 free — redeemable on either floor</li>
+        <li>Common Ground morning rush: $2.50 drip coffee 6–7am daily</li>
+        <li>High Ground Golden Hour: exclusive drinks only available upstairs 4pm–9pm</li>
+        <li>Sunset Saturdays: live ambient music on High Ground every Saturday evening</li>
+        <li>Referral reward: Bring a new customer, get a free syrup upgrade</li>
+        <li>Seasonal specials: Pumpkin Spice (Fall), Peppermint (Winter), Citrus Bloom (Spring)</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">📍 Downtown Presence</div>
+      <ul class="mkt-list">
+        <li>Bold corner signage visible from both streets — Skyside Coffee + Common Ground arrow at street level</li>
+        <li>Outdoor sidewalk seating on the corner — social proof for passersby</li>
+        <li>Daily chalkboard sign out front with the Golden Hour special</li>
+        <li>Partner with nearby businesses for cross-promotions</li>
+        <li>High Ground neon sign visible from outside at night — free advertising after dark</li>
+        <li>"Catch the Horizon" window decal facing the street on Floor 2</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">🗓️ Event Marketing</div>
+      <ul class="mkt-list">
+        <li>Grand Opening — free sample cups on Common Ground, ribbon cutting, first 50 customers get loyalty cards</li>
+        <li>High Ground Launch Night — invite-only sunset event, Golden Hour menu preview</li>
+        <li>Sunset Saturdays — weekly recurring evening event on High Ground</li>
+        <li>Community Coffee Day — open house for downtown neighbors and businesses</li>
+        <li>Seasonal menu launch events each quarter with new drinks revealed live</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">📱 Skyside App — Mobile Order & Loyalty</div>
+      <ul class="mkt-list">
+        <li>Order ahead from Common Ground or High Ground separately — skip the line</li>
+        <li>Loyalty points on every purchase — earn a free drink after 10 orders</li>
+        <li>App-exclusive daily deal pushed every morning at 7am to drive early traffic</li>
+        <li>"Rise Higher" rewards tier — the more you spend, the better the perks</li>
+        <li>Students and office workers can save their favorite Build Your Own order</li>
+        <li>Push notifications for Golden Hour menu reveal at 3:30pm daily</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">🎓 The Student Grind — Student Discount</div>
+      <ul class="mkt-list">
+        <li><strong>15% off</strong> any drink with a valid student ID from any accredited Arizona university or college</li>
+        <li>Eligible schools: ASU Downtown Phoenix, Phoenix College, Grand Canyon University, Rio Salado, and more</li>
+        <li>Discount applies to Common Ground floor and regular menu only</li>
+        <li>Does <strong>not</strong> apply to Golden Hour exclusives — keeps High Ground premium</li>
+        <li>Stackable with loyalty points but not other promotions</li>
+        <li>Promoted directly on ASU and Phoenix College social media and campus boards</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card">
+      <div class="mkt-card-title">💼 The Daily Grind Pass — Office Workers</div>
+      <ul class="mkt-list">
+        <li><strong>Monthly subscription — $45/mo</strong> for one drip coffee or tea per day, every day</li>
+        <li>Corporate accounts available for businesses wanting to order for their team</li>
+        <li>Bulk catering orders get <strong>10% off</strong> with 48hr advance notice</li>
+        <li>Priority mobile order queue for Daily Grind Pass holders during morning rush</li>
+        <li>Target downtown Phoenix office buildings within 5-minute walking radius</li>
+        <li>Partner with nearby coworking spaces to offer member discounts</li>
+      </ul>
+    </div>
+
+    <div class="mkt-card" style="grid-column: 1 / -1; max-width: 900px; margin: 0 auto;">
+      <div class="mkt-card-title">🏷️ Discount & Loyalty Summary</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:4px">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,168,48,0.2);border-radius:2px;padding:16px">
+          <div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--gold);margin-bottom:8px;font-weight:700">📱 Skyside App</div>
+          <ul class="mkt-list">
+            <li>10 orders = 1 free drink</li>
+            <li>Daily 7am deal notification</li>
+            <li>Mobile order ahead</li>
+            <li>Rise Higher rewards tier</li>
+          </ul>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,168,48,0.2);border-radius:2px;padding:16px">
+          <div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--gold);margin-bottom:8px;font-weight:700">🎓 Student Grind</div>
+          <ul class="mkt-list">
+            <li>15% off with valid student ID</li>
+            <li>All AZ colleges eligible</li>
+            <li>Regular menu only</li>
+            <li>Stackable with loyalty points</li>
+          </ul>
+        </div>
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(232,168,48,0.2);border-radius:2px;padding:16px">
+          <div style="font-family:'Playfair Display',serif;font-size:0.95rem;color:var(--gold);margin-bottom:8px;font-weight:700">💼 Daily Grind Pass</div>
+          <ul class="mkt-list">
+            <li>$45/mo — 1 coffee/tea per day</li>
+            <li>Corporate team accounts</li>
+            <li>10% off catering orders</li>
+            <li>Priority morning queue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mkt-card" style="grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+      <div class="mkt-card-title">📸 Sample Social Post</div>
+      <div class="sample-post">
+        <div class="post-top">
+          <!-- Skyside logo as profile pic -->
+          <div class="post-avatar" style="background:none;padding:0;overflow:hidden">
+            <svg viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px">
+              <defs>
+                <linearGradient id="pSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d0005"/><stop offset="25%" stop-color="#7a1010"/><stop offset="55%" stop-color="#d94f1e"/><stop offset="78%" stop-color="#f0820a"/><stop offset="100%" stop-color="#ffe040"/></linearGradient>
+                <radialGradient id="pSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff4a0"/><stop offset="40%" stop-color="#ffe040"/><stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/></radialGradient>
+                <radialGradient id="pHalo" cx="50%" cy="100%" r="80%"><stop offset="0%" stop-color="#ffe040" stop-opacity="0.5"/><stop offset="100%" stop-color="#d94f1e" stop-opacity="0"/></radialGradient>
+                <linearGradient id="pRing" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ffe040"/><stop offset="50%" stop-color="#f0820a"/><stop offset="100%" stop-color="#ffe040"/></linearGradient>
+                <clipPath id="pcc"><circle cx="170" cy="170" r="146"/></clipPath>
+                <filter id="pBlur"><feGaussianBlur stdDeviation="7"/></filter>
+              </defs>
+              <circle cx="170" cy="170" r="146" fill="url(#pSky)"/>
+              <rect x="24" y="24" width="292" height="292" fill="url(#pHalo)" clip-path="url(#pcc)"/>
+              <circle cx="170" cy="213" r="55" fill="#ffe040" opacity="0.18" filter="url(#pBlur)" clip-path="url(#pcc)"/>
+              <path d="M 126,213 A 44,44 0 0,1 214,213 Z" fill="url(#pSun)" clip-path="url(#pcc)"/>
+              <g fill="#0a0a0a" clip-path="url(#pcc)">
+                <rect x="24" y="196" width="18" height="17"/><rect x="38" y="188" width="14" height="25"/><rect x="50" y="178" width="20" height="35"/><rect x="78" y="163" width="10" height="50"/><rect x="86" y="182" width="22" height="31"/><rect x="118" y="170" width="16" height="43"/><rect x="152" y="155" width="18" height="58"/><rect x="138" y="175" width="14" height="38"/><rect x="174" y="172" width="14" height="41"/><rect x="200" y="185" width="20" height="28"/><rect x="218" y="165" width="10" height="48"/><rect x="252" y="191" width="14" height="22"/><rect x="274" y="194" width="16" height="19"/><rect x="288" y="198" width="14" height="15"/><rect x="24" y="213" width="292" height="103"/>
+              </g>
+              <circle cx="170" cy="170" r="146" fill="none" stroke="url(#pRing)" stroke-width="3" opacity="0.8"/>
+            </svg>
+          </div>
+          <div>
+            <div class="post-handle">@skysidecoffee</div>
+            <div class="post-time">Today · High Ground · Phoenix, AZ</div>
+          </div>
+        </div>
+
+        <!-- Outdoor balcony scene -->
+        <div style="width:100%;aspect-ratio:1;background:linear-gradient(180deg,#080010 0%,#150820 12%,#4a0e0e 35%,#c8400a 60%,#f0820a 78%,#ffe040 100%);position:relative;overflow:hidden">
+
+          <!-- Stars -->
+          <div style="position:absolute;top:4%;left:8%;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0.9"></div>
+          <div style="position:absolute;top:8%;left:22%;width:1px;height:1px;background:#fff;border-radius:50%;opacity:0.7"></div>
+          <div style="position:absolute;top:3%;left:40%;width:2px;height:2px;background:#ffe040;border-radius:50%;opacity:1;box-shadow:0 0 4px 2px rgba(255,224,64,0.4)"></div>
+          <div style="position:absolute;top:10%;left:58%;width:1px;height:1px;background:#fff;border-radius:50%;opacity:0.6"></div>
+          <div style="position:absolute;top:5%;left:72%;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0.8"></div>
+          <div style="position:absolute;top:13%;left:88%;width:1px;height:1px;background:#fff;border-radius:50%;opacity:0.5"></div>
+          <div style="position:absolute;top:7%;left:95%;width:2px;height:2px;background:#fff;border-radius:50%;opacity:0.7"></div>
+
+          <!-- Sun glow on horizon -->
+          <div style="position:absolute;bottom:22%;left:50%;transform:translateX(-50%);width:220px;height:80px;background:radial-gradient(ellipse,rgba(255,224,64,0.55) 0%,rgba(240,130,10,0.2) 50%,transparent 75%);border-radius:50%"></div>
+
+          <!-- Distant city skyline — tall rectangular Phoenix style -->
+          <div style="position:absolute;bottom:22%;left:0;right:0;height:100px;overflow:hidden">
+            <svg width="100%" height="100%" viewBox="0 0 320 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0"   y="83" width="12"  height="17" fill="#0a0a0a"/>
+              <rect x="10"  y="72" width="10"  height="28" fill="#0a0a0a"/>
+              <rect x="14"  y="60" width="8"   height="40" fill="#0a0a0a"/>
+              <rect x="16"  y="54" width="3"   height="6"  fill="#0a0a0a"/>
+              <rect x="20"  y="75" width="8"   height="25" fill="#0a0a0a"/>
+              <rect x="26"  y="65" width="6"   height="35" fill="#0a0a0a"/>
+              <rect x="30"  y="50" width="10"  height="50" fill="#0a0a0a"/>
+              <rect x="33"  y="44" width="4"   height="6"  fill="#0a0a0a"/>
+              <rect x="38"  y="78" width="8"   height="22" fill="#0a0a0a"/>
+              <rect x="44"  y="55" width="12"  height="45" fill="#0a0a0a"/>
+              <rect x="49"  y="48" width="3"   height="7"  fill="#0a0a0a"/>
+              <rect x="54"  y="68" width="8"   height="32" fill="#0a0a0a"/>
+              <rect x="60"  y="45" width="14"  height="55" fill="#0a0a0a"/>
+              <rect x="63"  y="38" width="5"   height="7"  fill="#0a0a0a"/>
+              <rect x="72"  y="60" width="10"  height="40" fill="#0a0a0a"/>
+              <rect x="80"  y="72" width="8"   height="28" fill="#0a0a0a"/>
+              <rect x="86"  y="40" width="16"  height="60" fill="#0a0a0a"/>
+              <rect x="90"  y="33" width="6"   height="7"  fill="#0a0a0a"/>
+              <rect x="100" y="58" width="10"  height="42" fill="#0a0a0a"/>
+              <rect x="108" y="70" width="8"   height="30" fill="#0a0a0a"/>
+              <!-- CENTER tallest tower -->
+              <rect x="114" y="20" width="18"  height="80" fill="#0a0a0a"/>
+              <rect x="117" y="13" width="10"  height="7"  fill="#0a0a0a"/>
+              <rect x="120" y="7"  width="4"   height="6"  fill="#0a0a0a"/>
+              <rect x="121" y="2"  width="2"   height="5"  fill="#0a0a0a"/>
+              <!-- flanking towers -->
+              <rect x="100" y="35" width="14"  height="65" fill="#0a0a0a"/>
+              <rect x="103" y="28" width="6"   height="7"  fill="#0a0a0a"/>
+              <rect x="132" y="32" width="14"  height="68" fill="#0a0a0a"/>
+              <rect x="135" y="25" width="6"   height="7"  fill="#0a0a0a"/>
+              <rect x="144" y="55" width="10"  height="45" fill="#0a0a0a"/>
+              <rect x="152" y="65" width="8"   height="35" fill="#0a0a0a"/>
+              <rect x="158" y="42" width="14"  height="58" fill="#0a0a0a"/>
+              <rect x="162" y="35" width="5"   height="7"  fill="#0a0a0a"/>
+              <rect x="170" y="60" width="10"  height="40" fill="#0a0a0a"/>
+              <rect x="178" y="48" width="12"  height="52" fill="#0a0a0a"/>
+              <rect x="182" y="40" width="4"   height="8"  fill="#0a0a0a"/>
+              <rect x="188" y="72" width="8"   height="28" fill="#0a0a0a"/>
+              <rect x="194" y="55" width="10"  height="45" fill="#0a0a0a"/>
+              <rect x="202" y="38" width="14"  height="62" fill="#0a0a0a"/>
+              <rect x="206" y="31" width="5"   height="7"  fill="#0a0a0a"/>
+              <rect x="214" y="65" width="8"   height="35" fill="#0a0a0a"/>
+              <rect x="220" y="50" width="12"  height="50" fill="#0a0a0a"/>
+              <rect x="224" y="43" width="3"   height="7"  fill="#0a0a0a"/>
+              <rect x="230" y="70" width="8"   height="30" fill="#0a0a0a"/>
+              <rect x="236" y="56" width="10"  height="44" fill="#0a0a0a"/>
+              <rect x="244" y="75" width="8"   height="25" fill="#0a0a0a"/>
+              <rect x="250" y="62" width="10"  height="38" fill="#0a0a0a"/>
+              <rect x="258" y="44" width="12"  height="56" fill="#0a0a0a"/>
+              <rect x="262" y="37" width="4"   height="7"  fill="#0a0a0a"/>
+              <rect x="268" y="68" width="8"   height="32" fill="#0a0a0a"/>
+              <rect x="274" y="78" width="10"  height="22" fill="#0a0a0a"/>
+              <rect x="282" y="60" width="10"  height="40" fill="#0a0a0a"/>
+              <rect x="290" y="74" width="8"   height="26" fill="#0a0a0a"/>
+              <rect x="296" y="82" width="12"  height="18" fill="#0a0a0a"/>
+              <rect x="308" y="76" width="12"  height="24" fill="#0a0a0a"/>
+            </svg>
+          </div>
+
+          <!-- Horizon line glow -->
+          <div style="position:absolute;bottom:22%;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,rgba(255,224,64,0.6),rgba(255,224,64,0.8),rgba(255,224,64,0.6),transparent)"></div>
+
+          <!-- Sky reflection on balcony floor -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:22%;background:linear-gradient(180deg,rgba(80,25,5,0.5) 0%,rgba(5,2,0,1) 100%)"></div>
+
+          <!-- Balcony floor tiles -->
+          <div style="position:absolute;bottom:0;left:0;right:0;height:22%">
+            <div style="position:absolute;top:25%;left:0;right:0;height:1px;background:rgba(160,80,20,0.35)"></div>
+            <div style="position:absolute;top:55%;left:0;right:0;height:1px;background:rgba(160,80,20,0.25)"></div>
+            <div style="position:absolute;top:78%;left:0;right:0;height:1px;background:rgba(160,80,20,0.18)"></div>
+            <!-- vertical tile lines -->
+            <div style="position:absolute;top:0;bottom:0;left:20%;width:1px;background:rgba(160,80,20,0.2)"></div>
+            <div style="position:absolute;top:0;bottom:0;left:40%;width:1px;background:rgba(160,80,20,0.2)"></div>
+            <div style="position:absolute;top:0;bottom:0;left:60%;width:1px;background:rgba(160,80,20,0.2)"></div>
+            <div style="position:absolute;top:0;bottom:0;left:80%;width:1px;background:rgba(160,80,20,0.2)"></div>
+          </div>
+
+          <!-- Balcony railing base bar -->
+          <div style="position:absolute;bottom:22%;left:0;right:0;height:4px;background:linear-gradient(90deg,#180a00,#7a4010,#c8832a,#7a4010,#180a00);opacity:0.95"></div>
+
+          <!-- Railing top cap bar -->
+          <div style="position:absolute;bottom:30%;left:0;right:0;height:5px;background:linear-gradient(90deg,#1a0a00,#8a5020,#c8832a,#8a5020,#1a0a00);box-shadow:0 0 6px rgba(140,80,20,0.35)"></div>
+
+          <!-- Railing vertical balusters -->
+          <div style="position:absolute;bottom:22%;left:0;right:0;height:8%">
+            <div style="display:flex;justify-content:space-around;height:100%;padding:0 2%">
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+              <div style="width:2px;background:rgba(120,60,10,0.75);height:100%"></div>
+            </div>
+          </div>
+
+          <!-- String lights across top -->
+          <div style="position:absolute;top:2%;left:0;right:0;height:12%">
+            <svg width="100%" height="100%" viewBox="0 0 320 40" preserveAspectRatio="none">
+              <path d="M0,5 Q40,18 80,8 Q120,18 160,8 Q200,18 240,8 Q280,18 320,5" stroke="rgba(200,131,42,0.5)" stroke-width="1" fill="none"/>
+              <circle cx="40" cy="16" r="3" fill="#ffe040" opacity="0.9"/><circle cx="40" cy="16" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="80" cy="9" r="3" fill="#ffe040" opacity="0.9"/><circle cx="80" cy="9" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="120" cy="16" r="3" fill="#ffe040" opacity="0.9"/><circle cx="120" cy="16" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="160" cy="9" r="3" fill="#ffe040" opacity="0.9"/><circle cx="160" cy="9" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="200" cy="16" r="3" fill="#ffe040" opacity="0.9"/><circle cx="200" cy="16" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="240" cy="9" r="3" fill="#ffe040" opacity="0.9"/><circle cx="240" cy="9" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+              <circle cx="280" cy="16" r="3" fill="#ffe040" opacity="0.9"/><circle cx="280" cy="16" r="5" fill="none" stroke="#ffe040" stroke-width="0.5" opacity="0.4"/>
+            </svg>
+          </div>
+
+          <!-- Branding text -->
+          <div style="position:absolute;bottom:3%;left:0;right:0;text-align:center">
+            <div style="font-family:'Abril Fatface',serif;font-size:0.85rem;color:rgba(255,224,64,0.95);letter-spacing:0.18em;text-shadow:0 2px 8px rgba(0,0,0,0.8)">CATCH THE HORIZON</div>
+            <div style="font-family:'DM Sans',sans-serif;font-size:0.55rem;font-weight:600;letter-spacing:0.22em;color:rgba(240,130,10,0.85);text-transform:uppercase;margin-top:3px;text-shadow:0 1px 6px rgba(0,0,0,0.8)">AT SKYSIDE</div>
+          </div>
+
+        </div>
+
+        <div class="post-caption">
+          Golden Hour starts at 4pm and High Ground is the only place to be. ✨ Grab a Sunset Espresso, find your window seat, and catch the horizon.
+          <div class="post-tags">#CatchTheHorizon #SkysideCoffee #HighGround #CommonGround #PhoenixAZ #GoldenHour</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function showTab(name) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(name + '-section').classList.add('active');
+    event.target.classList.add('active');
+  }
+</script>
+</body>
+</html>
